@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>توجيه إلى قناتي على يوتيوب</title>
+    <script>
+        // محاولة فتح التطبيق (deep link)
+        window.location.href = "youtube://www.youtube.com/@Lahn.alhikayat";
+        // إذا فشل، يروح للموقع بعد 500 ميلي ثانية
+        setTimeout(function() {
+            window.location.href = "https://www.youtube.com/@Lahn.alhikayat";
+        }, 500);
+    </script>
+</head>
+<body>
+    <p>جاري التوجيه إلى يوتيوب...</p>
+</body>
+</html>
