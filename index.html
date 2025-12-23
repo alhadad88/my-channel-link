@@ -1,18 +1,106 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>توجيه إلى قناتي على يوتيوب</title>
-    <script>
-        // محاولة فتح التطبيق (deep link)
-        window.location.href = "youtube://www.youtube.com/@Lahn.alhikayat";
-        // إذا فشل، يروح للموقع بعد 500 ميلي ثانية
-        setTimeout(function() {
-            window.location.href = "https://www.youtube.com/@Lahn.alhikayat";
-        }, 500);
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لحن الحكايات - الانتقال إلى يوتيوب</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .logo svg { fill: white; width: 45px; }
+        h1 { font-size: 22px; margin-bottom: 10px; }
+        p { font-size: 16px; color: #666; margin-bottom: 25px; }
+        .btn {
+            background-color: #ff0000;
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            display: inline-block;
+            transition: transform 0.2s, background-color 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn:active { transform: scale(0.95); background-color: #cc0000; }
+        .footer { margin-top: 30px; font-size: 12px; color: #999; }
+    </style>
 </head>
 <body>
-    <p>جاري التوجيه إلى يوتيوب...</p>
+
+    <div class="container">
+        <div class="logo">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.377.505 9.377.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <h1>لحن الحكايات</h1>
+        <p>اضغط أدناه لفتح القناة في تطبيق يوتيوب مباشرة للاشتراك ودعمنا</p>
+        
+        <button onclick="openYouTube()" class="btn">فتح في تطبيق يوتيوب</button>
+
+        <div class="footer">إذا لم يفتح التطبيق، تأكد من تثبيت يوتيوب على هاتفك</div>
+    </div>
+
+    <script>
+        function openYouTube() {
+            var channelUrl = "www.youtube.com/@Lahn.alhikayat";
+            var appUrl = "youtube://" + channelUrl;
+            var webUrl = "https://" + channelUrl;
+            
+            // للأندرويد: استخدام Intent وهو الأضمن لفتح التطبيق مباشرة
+            var androidIntent = "intent://" + channelUrl + "#Intent;package=com.google.android.youtube;scheme=https;end";
+
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            if (/android/i.test(userAgent)) {
+                window.location.href = androidIntent;
+            } 
+            else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                // للآيفون: نحاول فتح بروتوكول اليوتيوب
+                window.location.href = appUrl;
+                // إذا فشل (مثلاً التطبيق غير موجود)، يحوله للمتصفح بعد ثانية
+                setTimeout(function () {
+                    window.location.href = webUrl;
+                }, 1000);
+            } 
+            else {
+                // للكمبيوتر أو أي جهاز آخر
+                window.location.href = webUrl;
+            }
+        }
+
+        // محاولة تحويل تلقائي بمجرد دخول الصفحة (قد يمنعها إنستجرام لكن نجربها)
+        window.onload = function() {
+            setTimeout(openYouTube, 500);
+        };
+    </script>
 </body>
 </html>
